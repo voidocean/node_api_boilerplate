@@ -1,7 +1,18 @@
+const fs = require('fs');
+const path = require('path');
+
+const combineConfig = {};
+const files = fs.readdirSync(__dirname);
+for (let file of files) {
+    if (file === 'index.js') {
+        continue;
+    }
+    const contents = require(`./${file}`);
+    const key = file.replace('.js', '');
+    combineConfig[key] = { ...contents };
+}
+
 module.exports = {
-  port: process.env.PORT || 1984,
-  DB_HOST: process.env.DB_HOST || 'localhost',
-  DB_NAME: 'kinkao_api',
-  DB_USERNAME: process.env.DB_USERNAME || 'root',
-  DB_PASSWORD: process.env.DB_PASSWORD || 'root',
+    port: process.env.PORT || 1984,
+    ...combineConfig,
 };
