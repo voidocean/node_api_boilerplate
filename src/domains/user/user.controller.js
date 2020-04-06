@@ -1,5 +1,5 @@
 const { getUserByID } = require('./user.flows');
-const configs = require('../../configs');
+const configs = require('../../config');
 const userConfig = configs.user;
 
 exports.getUser = async (req, res) => {

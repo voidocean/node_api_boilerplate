@@ -1,7 +1,9 @@
 const express = require('express');
 
+
 // local import
-const config = require('./configs');
+
+
 
 const app = express();
 
