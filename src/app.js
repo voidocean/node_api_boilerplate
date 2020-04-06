@@ -12,7 +12,4 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Something broke!')
 })
 
-const port = config.port;
-app.listen(port, () => {
-  console.log(`listening on ${port}`);
-});
+module.exports = app;
