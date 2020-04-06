@@ -11,11 +11,11 @@ module.exports = (app) => {
     require('./user.routes')(app)
 
     app.get('/healthcheck', (req, res) => {
-        return res.send('Health Check')
+        return res.status(201).json('Health Check')
     })
 
     app.get('/', (req, res) => {
-        return res.send('home')
+        return res.status(201).json('home')
     })
 
 }
