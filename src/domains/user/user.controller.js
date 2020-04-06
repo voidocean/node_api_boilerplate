@@ -2,45 +2,48 @@ const { getUserByID, addUser, editUser, removeUser } = require('./user.flows');
 const configs = require('../../config');
 const userConfig = configs.user;
 
-exports.getUser = async (req, res) => {
+exports.getUser = async (req, res, next) => {
   try {
-    const { id } = req.query;
+    const { id } = req.params;
     const response = await getUserByID(id);
-    return res.status(201).json(response);
+    if(response){
+      return res.status(200).json(response);
+    } else {
+      return res.status(404).json(response);
+    }
+    
   } catch (error) {
-    console.error(error)
-    return res.status(500).json(error);
+    next(error)
+    
   }
 };
 
-exports.createUser = async (req, res) => {
+exports.createUser = async (req, res, next) => {
   try {
     const { fullName, password, email } = req.body;
     const response = await addUser({ fullName, password, email });
-    return res.status(201).json(response);
+    return res.status(200).json(response);
   } catch (error) {
-    console.error(error)
-    return res.status(500).json(error);
+    next(error)
   }
 };
 
-exports.updateUser = async (req, res) => {
+exports.updateUser = async (req, res, next) => {
   try {
     const { id, fullName, email } = req.body;
     const response = await editUser({ id, fullName, email });
-    return res.status(201).json(response);
+    return res.status(200).json(response);
   } catch (error) {
-    console.error(error)
-    return res.status(500).json(error);
+    next(error)
   }
 };
 
-exports.deleteUser = async (req, res) => {
+exports.deleteUser = async (req, res, next) => {
   try {
     const { id } = req.query;
     const response = await removeUser(id);
-    return res.status(201).json(response);
+    return res.status(200).json(response);
   } catch (error) {
-    return res.status(500).json(error);
+    next(error)
   }
 };

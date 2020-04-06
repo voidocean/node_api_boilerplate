@@ -1,21 +1,14 @@
 
 const bodyParser = require('body-parser')
-
+const { errorHandling } = require('../middlewares/errorHandling')
 module.exports = (app) => {
 
 
     app.use(bodyParser.urlencoded({ extended: false }))
     app.use(bodyParser.json())
-
+    app.use(errorHandling)
 
     require('./user.routes')(app)
-
-    app.get('/healthcheck', (req, res) => {
-        return res.status(201).json('Health Check')
-    })
-
-    app.get('/', (req, res) => {
-        return res.status(201).json('home')
-    })
+    require('./test.routes')(app)
 
 }

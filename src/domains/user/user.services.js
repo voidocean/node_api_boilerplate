@@ -1,5 +1,5 @@
 const bcryptjs = require('bcryptjs')
-const { User } = require('../../models')
+const { User, User_session } = require('../../models')
 const { saltRounds } = require('../../config/user')
 exports.encryptPassword = async (password)=>{
     const encryptedPassword = await bcryptjs.hash(password, saltRounds);
@@ -9,7 +9,8 @@ exports.fetchUser= async (id) => {
     
     const user = await User.findOne({ 
         where: { id: id },
-        attributes: { exclude: ['password'] } 
+        attributes: { exclude: ['password'] } ,
+        include: { model: User_session }
     });
 
     return user

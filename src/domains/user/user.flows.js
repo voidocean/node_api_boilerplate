@@ -1,9 +1,7 @@
 const { fetchUser, insertUser, updateUser, deleteUser, encryptPassword } = require('./user.services');
 
 exports.getUserByID = async (id) => {
-    
-    const result = await fetchUser( id);
-
+    const result = await fetchUser(id);
     return result;
 };
 
