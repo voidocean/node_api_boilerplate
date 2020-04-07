@@ -45,13 +45,13 @@ describe("user_flows.editUser", ()=>{
         updateUser.mockReturnValue(1)
         const result =  await user_flows.editUser({ id: user_id, fullName: new_user.fullName, email: new_user.email });
         expect(updateUser).toBeCalledWith(user_id, { fullName: new_user.fullName, email: new_user.email })
-        expect(result).toStrictEqual({"message":"successful"})
+        expect(result).toStrictEqual(1)
     })
     it("should handle an error if update failed", async () => {
         updateUser.mockReturnValue(0)
         const result =  await user_flows.editUser({ id: user_id, fullName: new_user.fullName, email: new_user.email });
         expect(updateUser).toBeCalledWith(user_id, { fullName: new_user.fullName, email: new_user.email })
-        expect(result).toStrictEqual({"message":"failed"})
+        expect(result).toStrictEqual(0)
     })
     
 })

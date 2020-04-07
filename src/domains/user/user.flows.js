@@ -24,11 +24,8 @@ exports.editUser = async ({ id, fullName, email}) => {
         fullName,
         email
     };
-    const is_updated = await updateUser(id, update_data)
-    let result = { message: "failed" }
-    if(is_updated){
-        result.message = "successful"
-    }
+    const result = await updateUser(id, update_data)
+    
     return result
 
 }

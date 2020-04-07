@@ -32,7 +32,8 @@ exports.createUser = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   try {
-    const { id, fullName, email } = req.body;
+    const { id } = req.params;
+    const { fullName, email } = req.body;
     const response = await editUser({ id, fullName, email });
     if(response){
       return res.status(200).json({message: 'Update Successfully'});
