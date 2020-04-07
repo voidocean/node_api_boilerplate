@@ -16,8 +16,13 @@ describe("errorHandling test", ()=>{
         const errorMessage = {message: 'Error in updating User'};
         await errorHandling(errorMessage, req, res, next);
         expect(res.statusCode).toBe(500);
-        expect(res._getJSONData()).toStrictEqual(errorMessage)
-        
+        expect(res._getJSONData()).toStrictEqual(errorMessage)  
+    })
+    it("should get an error code 404", async () => {      
+        const errorMessage = { statusCode: 404, message: 'Error in updating User'};
+        await errorHandling(errorMessage, req, res, next);
+        expect(res.statusCode).toBe(404);
+        expect(res._getJSONData()).toStrictEqual({message: errorMessage.message})  
     })
 
 })

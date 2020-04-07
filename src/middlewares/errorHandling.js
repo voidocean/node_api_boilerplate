@@ -1,3 +1,4 @@
 exports.errorHandling = (error, req, res, next)=>{
-    return res.status(500).json({ message: error.message })
+    const statusCode = error.statusCode ? error.statusCode : 500
+    return res.status(statusCode).json({ message: error.message })
 }

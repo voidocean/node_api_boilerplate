@@ -10,6 +10,7 @@ module.exports = (app) => {
     app.use(errorHandling)
 
     require('./user.routes')(app)
+    require('./authentication.routes')(app)
     require('./healthcheck.routes')(app)
 
 }
