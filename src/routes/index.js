@@ -10,6 +10,6 @@ module.exports = (app) => {
     app.use(errorHandling)
 
     require('./user.routes')(app)
-    require('./test.routes')(app)
+    require('./healthcheck.routes')(app)
 
 }
