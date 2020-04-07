@@ -1,9 +1,10 @@
 const user_controller = require('../../../../src/domains/user/user.controller')
 const { getUserByID, addUser, editUser, removeUser  } = require('../../../../src/domains/user/user.flows')
 const new_user = require('../../../mock-data/user/new_user.json')
-const update_user = require('../../../mock-data/user/update_user.json')
+
 
 const httpMocks = require("node-mocks-http");
+
 
 jest.mock('../../../../src/domains/user/user.flows')
 
@@ -52,6 +53,13 @@ describe("user_controller.createUser", ()=>{
         expect(res._isEndCalled()).toBeTruthy();
         expect(res._getJSONData()).toStrictEqual(new_user)
     })
+    it("should return json and 200 response code", async ()=>{
+        addUser.mockReturnValue(new_user)
+        await user_controller.createUser(req, res, next);
+        expect(res.statusCode).toBe(200);
+        expect(res._isEndCalled()).toBeTruthy();
+        expect(res._getJSONData()).toStrictEqual(new_user)
+    })
     it("should handle errors", async () => {
         const errorMessage = {message: 'Error in creating User'};
         const rejectedPromise = Promise.reject(errorMessage);
@@ -72,6 +80,14 @@ describe("user_controller.updateUser", ()=>{
         expect(res.statusCode).toBe(200);
         expect(res._isEndCalled()).toBeTruthy();
         expect(res._getJSONData()).toStrictEqual(update_message)
+    });
+    it("should return 404 response code", async ()=>{
+        const update_message= {message: "Update Failed"}
+        editUser.mockReturnValue(0)
+        await user_controller.updateUser(req, res, next);
+        expect(res.statusCode).toBe(404);
+        expect(res._isEndCalled()).toBeTruthy();
+        expect(res._getJSONData()).toStrictEqual(update_message)
     })
     it("should handle errors", async () => {
         const errorMessage = {message: 'Error in updating User'};
@@ -87,21 +103,23 @@ describe("user_controller.deleteUser", ()=>{
         expect(typeof user_controller.deleteUser).toBe('function');
     });
     it("should return 200 response code", async ()=>{
-        req.query =  { id: 25 }
-        await user_controller.deleteUser(req, res, next);
-        expect(res.statusCode).toBe(200);
-        expect(res._isEndCalled()).toBeTruthy();
-    })
-    it("should return 200 response code", async ()=>{
         const delete_message= {message: "Delete Successfully"}
-        removeUser.mockReturnValue(delete_message)
+        removeUser.mockReturnValue(1)
         await user_controller.deleteUser(req, res, next);
         expect(res.statusCode).toBe(200);
         expect(res._isEndCalled()).toBeTruthy();
         expect(res._getJSONData()).toStrictEqual(delete_message)
     })
+    it("should return 404 response code", async ()=>{
+        const delete_message= {message: "Delete Failed"}
+        removeUser.mockReturnValue(0)
+        await user_controller.deleteUser(req, res, next);
+        expect(res.statusCode).toBe(404);
+        expect(res._isEndCalled()).toBeTruthy();
+        expect(res._getJSONData()).toStrictEqual(delete_message)
+    })
     it("should handle errors", async () => {
-        const errorMessage = {message: 'Error in updating User'};
+        const errorMessage = {message: 'Error in Deleting User'};
         const rejectedPromise = Promise.reject(errorMessage);
         removeUser.mockReturnValue(rejectedPromise);
         await user_controller.deleteUser(req, res, next);
