@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require("passport");
 
 
 
@@ -7,7 +8,9 @@ const express = require('express');
 
 
 const app = express();
-
+require("./middlewares/passport");
+app.use(passport.initialize());
+app.use(passport.session());
 require('./routes')(app);
 
 module.exports = app;

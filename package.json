@@ -20,6 +20,8 @@
     "mysql2": "^2.1.0",
     "node-mocks-http": "^1.8.1",
     "nodemon": "^2.0.2",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
     "sequelize": "^5.21.5",
     "supertest": "^4.0.2",
     "weak-napi": "^1.0.3"
