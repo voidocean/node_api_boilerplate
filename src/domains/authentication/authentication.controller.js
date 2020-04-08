@@ -22,7 +22,6 @@ exports.checkToken = async (req, res, next) => {
             return res.status(401).json({ message: 'token is not valid' })
         }
     } catch (error) {
-        console.error(error)
         next(error)
     }
 }
