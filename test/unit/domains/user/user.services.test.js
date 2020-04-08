@@ -1,10 +1,14 @@
 const bcryptjs = require('bcryptjs')
 const user_services = require('../../../../src/domains/user/user.services');
 const { User } = require('../../../../src/models')
-jest.mock('../../../../src/models')
 const new_user = require('../../../mock-data/user/new_user.json')
 
-bcryptjs.hash = jest.fn()
+User.findOne = jest.fn();
+User.create = jest.fn();
+User.update = jest.fn();
+User.destroy = jest.fn();
+
+bcryptjs.hash = jest.fn();
 
 let user_id = 1
 

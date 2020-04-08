@@ -42,7 +42,6 @@ describe("authentication test", ()=>{
         req.headers.authorization = user_credential.jwtToken;
         User_session.findOne.mockReturnValue(false);
         
-        
         passport.authenticate = jest.fn((authType, options, callback) => () => { callback(user_credential.decodedToken); });
         await auth_required(req, res, next);
         expect(passport.authenticate).toHaveBeenCalledTimes(1);
@@ -57,9 +56,6 @@ describe("authentication test", ()=>{
         await auth_required(req, res, next);
         expect(passport.authenticate).toHaveBeenCalledTimes(1);
         expect(res.statusCode).toBe(403);
-        expect(res._isEndCalled()).toBeTruthy();
-
-
-        
+        expect(res._isEndCalled()).toBeTruthy();  
     })
 })
