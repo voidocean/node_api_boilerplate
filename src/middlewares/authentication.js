@@ -8,9 +8,9 @@ exports.auth_required = async (req, res, next) => {
         } else {
             const { authorization } = req.headers
             const token = authorization.split(' ')[1];
-            
+
             const user_session = await User_session.findOne({ where: { user_id: payload.id, token:token, expiry_date: payload.expires, status: 'Active' }})
-            console.log(user_session)
+            
             if(user_session){
                 const user = await User.findOne({ where: { id: payload.id}})
                 req.user_session = user

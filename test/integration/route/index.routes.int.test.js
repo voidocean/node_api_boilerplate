@@ -3,17 +3,15 @@ const app = require('../../../src/app')
 let server;
 
 beforeAll(async (done) => {
-    
-    server = app.listen(4002, () => {
-      global.agent = request.agent(server);
-      done();
-    });
+  server = app.listen(4002, () => {
+    global.agent = request.agent(server);
+    done();
   });
-  
-  afterAll(async () => {
-    await server.close();
-    
-  });
+});
+
+afterAll(async () => {
+  await server.close();
+});
 const homeCheckEndpointURL = "/";
 const healthCheckEndpointURL = "/healthcheck/";
 describe(homeCheckEndpointURL, ()=>{

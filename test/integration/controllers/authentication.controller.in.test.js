@@ -25,17 +25,17 @@ describe(loginEndpointURL, ()=>{
 })
 
 describe(checkTokenEndpointURL, ()=>{
-    it("should return token and 200 in POST to "+ checkTokenEndpointURL, async () => {
+    it("should return token and 200 in get to "+ checkTokenEndpointURL, async () => {
         const response = await request(app)
             .get(checkTokenEndpointURL)
             .set({'authorization': "Bearer "+newToken})
         expect(response.statusCode).toBe(200);
         expect(response.body).toHaveProperty('token')
     })
-    it("should return 500 in POST to "+ checkTokenEndpointURL, async () => {
+    it("should return 403 in get to "+ checkTokenEndpointURL, async () => {
         const response = await request(app)
             .get(checkTokenEndpointURL)
             .set({'authorization': newToken+'1'})
-        expect(response.statusCode).toBe(500);
+        expect(response.statusCode).toBe(403);
     })
 })

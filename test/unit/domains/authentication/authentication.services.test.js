@@ -6,6 +6,7 @@ const user = require('../../../mock-data/authentication/user.json');
 const user_session = require('../../../mock-data/authentication/user_session.json');
 
 jest.mock('../../../../src/models')
+User_session.update = jest.fn();
 
 
 describe("authentication_services.fetchUserByEmail", ()=>{
@@ -103,6 +104,19 @@ describe("authentication_services.create_user_session", ()=>{
         const userSession =  await authentication_services.create_user_session(user_credential.id, user_credential.jwtToken, user_credential.jwtExpireDate);
 
         expect(userSession).toStrictEqual(user_session)
+    })
+    
+})
+
+describe("authentication_services.DeactivateUserSession", ()=>{
+    it("should be a function", ()=>{
+        expect(typeof authentication_services.DeactivateUserSession).toBe('function');
+    });
+    it("should return true", async () => {      
+        User_session.update.mockReturnValue(true)
+        const userSession =  await authentication_services.DeactivateUserSession(user_credential.id, user_credential.jwtToken);
+
+        expect(userSession).toStrictEqual(true)
     })
     
 })

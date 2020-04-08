@@ -1,4 +1,6 @@
-const { fetchUserByEmail, validate_password, encodeJWT, decodeJWT, create_user_session, fetchUserSessionByTokens } = require('./authentication.services')
+const { fetchUserByEmail, validate_password, 
+    encodeJWT, decodeJWT, DeactivateUserSession,
+    create_user_session, fetchUserSessionByTokens } = require('./authentication.services')
 let error401 = new Error('credential is wrong')
 error401.statusCode = 401 
 exports.authenticate = async(email, password) => {
@@ -37,3 +39,7 @@ exports.splitToken = (authorization) => {
     return token
 }
 
+exports.signout = async (user_session, token) => {
+    const result = await DeactivateUserSession(user_session.id, token)
+    return result
+}

@@ -1,5 +1,5 @@
 const authentication_flows = require('../../../../src/domains/authentication/authentication.flows');
-const { fetchUserByEmail, validate_password, encodeJWT, decodeJWT, fetchUserSessionByTokens, create_user_session } = require('../../../../src/domains/authentication/authentication.services');
+const { fetchUserByEmail, validate_password, encodeJWT, decodeJWT, fetchUserSessionByTokens, create_user_session, DeactivateUserSession } = require('../../../../src/domains/authentication/authentication.services');
 const user_credential = require('../../../mock-data/authentication/user_credential.json');
 const user_session = require('../../../mock-data/authentication/user_session.json');
 const user = require('../../../mock-data/authentication/user.json');
@@ -36,9 +36,9 @@ describe("authentication_flows.authenticate", ()=>{
     })
 })
 
-describe("authentication_flows.authenticate", ()=>{
+describe("authentication_flows.validateToken", ()=>{
     it("should be a function", ()=>{
-        expect(typeof authentication_flows.authenticate).toBe('function');
+        expect(typeof authentication_flows.validateToken).toBe('function');
     });
     it("should return true", async () => {      
         decodeJWT.mockReturnValue(user_credential.decodedToken)
@@ -75,6 +75,20 @@ describe("authentication_flows.splitToken", ()=>{
         const result =  await authentication_flows.splitToken("Bearer "+user_credential.jwtToken);
      
         expect(result).toStrictEqual(user_credential.jwtToken)
+    })
+   
+})
+
+describe("authentication_flows.signout", ()=>{
+    it("should be a function", ()=>{
+        expect(typeof authentication_flows.signout).toBe('function');
+    });
+    it("should return Bearer to be remove", async () => {      
+        
+        DeactivateUserSession.mockReturnValue(true)
+        const result =  await authentication_flows.signout(user_credential, user_credential.jwtToken);
+        expect(DeactivateUserSession).toBeCalledWith(user_credential.id, user_credential.jwtToken)
+        expect(result).toStrictEqual(true)
     })
    
 })

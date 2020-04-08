@@ -19,6 +19,12 @@ exports.fetchUserSessionByTokens = async (decoded_token, token) => {
     
 }
 
+exports.DeactivateUserSession = async (user_id, token) => {
+    
+    const result = await User_session.update({ status: 'Deactivate' }, { where: { user_id: user_id, token: token } });
+
+    return result
+}
 
 exports.validate_password = async (password, user_password) => {
     
